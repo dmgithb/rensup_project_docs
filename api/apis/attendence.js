@@ -155,3 +155,85 @@
    @apiUse GeneralError
    @apiUse SessionExpired
 */
+
+
+
+
+/**
+    @api {POST} /attendance/mark-break Mark Break
+    @apiDescription User can mark their breaks
+    @apiName mark-break
+    @apiGroup Attendance
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiParam {String} userId Unique ID of the user
+    @apiParam {String="ON","OFF"} status Status of the break
+
+    @apiParamExample {json} Params:
+    {
+        "userId": "35434",
+        "status": "ON"
+    } 
+
+    @apiSuccess {String} message  Message to user
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        message: "success"
+    }
+
+    @apiUse InactiveAccount
+    @apiUse GeneralError
+    @apiUse SessionExpired
+
+    @apiError (5xx) {String} InvalidBreakStatus The break status is invalid.
+    @apiErrorExample InvalidBreakStatus
+    HTTP/1.1 590 InvalidBreakStatus
+    {
+        error: "The break status is invalid"
+    }
+*/
+
+
+
+/**
+    @api {POST} /attendance/apply-leave Apply Leave 
+    @apiDescription User can apply for leaves
+    @apiName apply-leave
+    @apiGroup Attendance
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiParam {String} userId Unique ID of the user
+    @apiParam {String} fromDate Date the leave starts.
+    @apiParam {String} toDate Date the leave ends.
+    @apiParam {String} startTime Time from the leave starts. The time should be in 24 hours.
+    @apiParam {String} endTime Time from the leave ends. The time should be in 24 hours.
+    @apiParam {Integer} reasonId ID of the reason for the leave.
+
+    @apiParamExample {json} Params:
+    {
+        "userId": "35434",
+        "fromDate": "YYYY/MM/DD",
+        "toDate": "YYYY/MM/DD",
+        "startTime": "18:30"
+        "endTime": "22:30",
+        "reasonId": 1
+    } 
+
+    @apiSuccess {String} message  Message to user
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        message: "Your leave request for date ${fromDate, startTime}-${toDate, endTime} has been submitted for approval."
+    }
+
+    @apiUse InactiveAccount
+    @apiUse GeneralError
+    @apiUse SessionExpired
+*/
