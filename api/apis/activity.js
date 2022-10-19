@@ -12,6 +12,7 @@
     @apiSuccess {Object[]}  activities An array which contains the list of activities
     @apiSuccess {Integer} activities.id The unique ID of the activity
     @apiSuccess {String} activities.name  The title of the activity
+    @apiSuccess {String="maintenance","receive"} activities.identifier The identifier used by the front-end. 
     @apiSuccess {String} activities.code  A code which represents the type of the activity.
    
    
@@ -21,6 +22,7 @@
             activities: [{
                 id: 25, 
                 name: "Maintenance Tasks",
+                identifier: "maintenance"
                 code: "Tasks"
             }],
             message: "You have no activities assigned. Please contact the admin."

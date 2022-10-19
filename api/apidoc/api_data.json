@@ -41,6 +41,17 @@
           {
             "group": "Success 200",
             "type": "String",
+            "allowedValues": [
+              "\"maintenance\"",
+              "\"receive\""
+            ],
+            "optional": false,
+            "field": "activities.identifier",
+            "description": "<p>The identifier used by the front-end.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
             "optional": false,
             "field": "activities.code",
             "description": "<p>A code which represents the type of the activity.</p>"
@@ -50,7 +61,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n        activities: [{\n            id: 25, \n            name: \"Maintenance Tasks\",\n            code: \"Tasks\"\n        }],\n        message: \"You have no activities assigned. Please contact the admin.\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n        activities: [{\n            id: 25, \n            name: \"Maintenance Tasks\",\n            identifier: \"maintenance\"\n            code: \"Tasks\"\n        }],\n        message: \"You have no activities assigned. Please contact the admin.\"\n}",
           "type": "json"
         }
       ]
@@ -2586,6 +2597,291 @@
     "type": "GET",
     "url": "/user/",
     "title": "Get User",
+    "version": "2.0.0",
+    "description": "<p>Returns the details of user</p>",
+    "name": "get-user",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Unique ID of the user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n   \"id\": \"35434\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Unique ID of the user.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>The full name of the user, concatinate if user's name stored as different components.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "roleId",
+            "description": "<p>The unique ID of the role assigned for user.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "role",
+            "description": "<p>Title of the role assigned for user.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"PUNCHEDIN\"",
+              "\"PUNCHEDOUT\""
+            ],
+            "optional": false,
+            "field": "attendencStatus",
+            "description": "<p>Whether the user is punched in or punched out.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "workingTime",
+            "description": "<p>Total time the user worked. <code>Note: This should be in seconds.</code>.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "punchIn",
+            "description": "<p>Punch-in time of the employee.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "punchOut",
+            "description": "<p>Punch-out time of the employee.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"break\"",
+              "\"work\""
+            ],
+            "optional": false,
+            "field": "workStatus",
+            "description": "<p>Contains the work status of the employee. Whether in break or at work.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "task",
+            "description": "<p>Contains the details of the active task of the user.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "task.id",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.name",
+            "description": "<p>The name of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.description",
+            "description": "<p>The description of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.eta",
+            "description": "<p>The ETA of the task <code>Format: MM dd YYYY, hh:mm a. Eg: Sept 29 2022, 12:00 PM</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"NOTSTARTED\"",
+              "\"INPROGRESS\"",
+              "\"PAUSED\"",
+              "\"COMPLETED\"",
+              "\"HOLD\""
+            ],
+            "optional": false,
+            "field": "task.status",
+            "description": "<p>The current status of the task.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.totalHours",
+            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n   id: \"1998\",\n   name: \"Robert William\"\n   roleId: 10,\n   role: \"Store Keeper\",\n   attendencStatus: \"PUNCHEDIN\",\n   workingTime: 564646,\n   punchIn: \"7:03 AM\",\n   punchOut: \"10:03 AM\",\n   workStatus: \"work\",\n   task: {\n      id: 58,\n      name: \"test task 1\",\n      description: \"test task 1\",\n      eta: \"Sep 29 2022, 12:00AM\",\n      status: \"INPROGRESS\",\n      totalHours: \"00:30 Hrs\"\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/user.js",
+    "groupTitle": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "GET",
+    "url": "/user/",
+    "title": "Get User",
+    "version": "1.0.0",
     "description": "<p>Returns the details of user</p>",
     "name": "get-user",
     "group": "User",
@@ -2677,13 +2973,12 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n   id: \"1998\",\n   name: \"Robert William\"\n   roleId: 10,\n   role: \"Store Keeper\",\n   attendencStatus: \"PUNCHEDIN\",\n   workingTime: 564646,\n   punchIn: \"7:03 AM\",\n   punchOut: \"10:03 AM\" \n}",
+          "content": "HTTP/1.1 200 OK\n{\n   id: \"1998\",\n   name: \"Robert William\"\n   roleId: 10,\n   role: \"Store Keeper\",\n   attendencStatus: \"PUNCHEDIN\",\n   workingTime: 564646,\n   punchIn: \"7:03 AM\",\n   punchOut: \"10:03 AM\"\n}",
           "type": "json"
         }
       ]
     },
-    "version": "0.0.0",
-    "filename": "apis/user.js",
+    "filename": "apis/Previous Version/Previous Version APIs.js",
     "groupTitle": "User",
     "header": {
       "fields": {
