@@ -184,641 +184,6 @@
   },
   {
     "type": "GET",
-    "url": "/activity/get-task",
-    "title": "Get Task",
-    "version": "2.0.0",
-    "description": "<p>Returns the details of the requested task</p>",
-    "name": "get-task",
-    "group": "Activity",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "taskId",
-            "description": "<p>The unique ID of the task</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Params:",
-          "content": "{\n     taskId: 58\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The unique ID of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>The name of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "description",
-            "description": "<p>The description of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "eta",
-            "description": "<p>The ETA of the task <code>Format: MM dd YYYY, hh:mm a. Eg: Sept 29 2022, 12:00 PM</code></p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "allowedValues": [
-              "\"NOTSTARTED\"",
-              "\"INPROGRESS\"",
-              "\"PAUSED\"",
-              "\"COMPLETED\"",
-              "\"HOLD\""
-            ],
-            "optional": false,
-            "field": "status",
-            "description": "<p>The current status of the task.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.totalHours",
-            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "supplies",
-            "description": "<p>An array which contains the list of supply items and its current status</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "supplies.name",
-            "description": "<p>The name of the supply item</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "allowedValues": [
-              "\"ONHAND\"",
-              "\"ORDERED\""
-            ],
-            "optional": false,
-            "field": "supplies.status",
-            "description": "<p>The current status of the supply item</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "supplies.type",
-            "description": "<p>The type of the supply item</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n     id: 58,\n     name: \"Fix internet connection\",\n     description: \"\",\n     eta: \"Oct 2 2022 12:00:00:AM\",\n     status: \"Inactive\",\n     totalHours: \"03:00 Hrs\"\n     status: \"Start\",\n     supplies: [\n         {\n             name: \"Hammer & Screw driver\",\n             status: \"ONHAND\",\n             type: \"Tools\"\n         }\n     ]\n }",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "apis/activity.js",
-    "groupTitle": "Activity",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "App-Version",
-            "description": "<p>Version of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Build-Number",
-            "description": "<p>The Build number of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Type",
-            "description": "<p>Type of the device. iOS/Android.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-OS-Version",
-            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Identifier",
-            "description": "<p>Device token to send push notifictions.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Api-Key",
-            "description": "<p>The API key to identify the  client.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>AuthToken received during login.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "CommonHeader",
-          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "AuthHeader",
-          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "4xx": [
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "InactiveAccount",
-            "description": "<p>The account is inactive. Please contact admin.</p>"
-          },
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "SessionExpired",
-            "description": "<p>User session has expired.</p>"
-          }
-        ],
-        "6xx": [
-          {
-            "group": "6xx",
-            "type": "String",
-            "optional": false,
-            "field": "GeneralError",
-            "description": "<p>Any general / undefined error types will come under this category.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "InactiveAccount",
-          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "GeneralError",
-          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "SessionExpired",
-          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
-          "type": "json"
-        }
-      ]
-    }
-  },
-  {
-    "type": "GET",
-    "url": "/activity/get-tasks-of-activity",
-    "title": "Get Tasks Of Activity",
-    "version": "2.0.0",
-    "description": "<p>Returns the list of tasks comes under the requested activity</p>",
-    "name": "get-tasks-of-activity",
-    "group": "Activity",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "activityId",
-            "description": "<p>The unique ID of the activity</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Params:",
-          "content": "{\n    activityId: 25\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "tasks",
-            "description": "<p>An array which contains the list of tasks</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Integer",
-            "optional": false,
-            "field": "tasks.id",
-            "description": "<p>The unique ID of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.name",
-            "description": "<p>The name of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.description",
-            "description": "<p>The description of the task</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.eta",
-            "description": "<p>The ETA of the task <code>Format: MM dd YYYY, hh:mm a. Eg: Sept 29 2022, 12:00 PM</code></p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "allowedValues": [
-              "\"NOTSTARTED\"",
-              "\"INPROGRESS\"",
-              "\"PAUSED\"",
-              "\"COMPLETED\"",
-              "\"HOLD\""
-            ],
-            "optional": false,
-            "field": "tasks.status",
-            "description": "<p>The current status of the task.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tasks.totalHours",
-            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n        tasks: \n        [\n            {\n                id: 58,\n                name: \"test task 1\",\n                description: \"test task 1\",\n                eta: \"Sep 29 2022, 12:00AM\",\n                status: \"INPROGRESS\",\n                totalHours: \"00:30 Hrs\"\n            },\n            {\n                id: 59,\n                taskName: \"test task 2\",\n                taskDesc: \"test task 2\",\n                eta: \"Sep 27 2022, 12:00 AM\",\n                status: \"PAUSED\",\n                totalHours: \"03:00 Hrs\"\n            }\n        ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "apis/activity.js",
-    "groupTitle": "Activity",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "App-Version",
-            "description": "<p>Version of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Build-Number",
-            "description": "<p>The Build number of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Type",
-            "description": "<p>Type of the device. iOS/Android.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-OS-Version",
-            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Identifier",
-            "description": "<p>Device token to send push notifictions.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Api-Key",
-            "description": "<p>The API key to identify the  client.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>AuthToken received during login.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "CommonHeader",
-          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "AuthHeader",
-          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "4xx": [
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "InactiveAccount",
-            "description": "<p>The account is inactive. Please contact admin.</p>"
-          },
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "SessionExpired",
-            "description": "<p>User session has expired.</p>"
-          }
-        ],
-        "6xx": [
-          {
-            "group": "6xx",
-            "type": "String",
-            "optional": false,
-            "field": "GeneralError",
-            "description": "<p>Any general / undefined error types will come under this category.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "InactiveAccount",
-          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "GeneralError",
-          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "SessionExpired",
-          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
-          "type": "json"
-        }
-      ]
-    }
-  },
-  {
-    "type": "POST",
-    "url": "/activity/update-task-status",
-    "title": "Update Task Status",
-    "version": "2.0.0",
-    "description": "<p>To update the status of the task</p>",
-    "name": "update-task-status",
-    "group": "Activity",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "activityId",
-            "description": "<p>The unique ID of the activity</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "Integer",
-            "optional": false,
-            "field": "taskId",
-            "description": "<p>The unique ID of the task</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "allowedValues": [
-              "\"STARTED\"",
-              "\"PAUSED\"",
-              "\"RESUMED\"",
-              "\"COMPLETED\""
-            ],
-            "optional": false,
-            "field": "status",
-            "description": "<p>The status to be updated.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Params:",
-          "content": "{\n    activityId: 25,\n    taskId: 58,\n    status: \"COMPLETED\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Success message from the server</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    message: \"Task status updated successfully\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "apis/activity.js",
-    "groupTitle": "Activity",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "App-Version",
-            "description": "<p>Version of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Build-Number",
-            "description": "<p>The Build number of the application.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Type",
-            "description": "<p>Type of the device. iOS/Android.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-OS-Version",
-            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Device-Identifier",
-            "description": "<p>Device token to send push notifictions.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Api-Key",
-            "description": "<p>The API key to identify the  client.</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>AuthToken received during login.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "CommonHeader",
-          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "AuthHeader",
-          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "4xx": [
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "InactiveAccount",
-            "description": "<p>The account is inactive. Please contact admin.</p>"
-          },
-          {
-            "group": "4xx",
-            "type": "String",
-            "optional": false,
-            "field": "SessionExpired",
-            "description": "<p>User session has expired.</p>"
-          }
-        ],
-        "6xx": [
-          {
-            "group": "6xx",
-            "type": "String",
-            "optional": false,
-            "field": "GeneralError",
-            "description": "<p>Any general / undefined error types will come under this category.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "InactiveAccount",
-          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "GeneralError",
-          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "SessionExpired",
-          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
-          "type": "json"
-        }
-      ]
-    }
-  },
-  {
-    "type": "GET",
     "url": "/app/get-leave-reasons",
     "title": "Get Leave Reasons",
     "description": "<p>Returns the reasons for leave</p>",
@@ -2595,6 +1960,1017 @@
   },
   {
     "type": "GET",
+    "url": "/maintenance/get-task/{taskId}",
+    "title": "Get Task",
+    "version": "2.0.0",
+    "description": "<p>Returns the details of the requested task</p>",
+    "name": "get-task",
+    "group": "Maintenance",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "taskId",
+            "description": "<p>The unique ID of the task</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n     taskId: 58\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>The name of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>The description of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "eta",
+            "description": "<p>The ETA of the task <code>format: YYYY-MM-DD.</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"NOTSTARTED\"",
+              "\"INPROGRESS\"",
+              "\"PAUSED\"",
+              "\"COMPLETED\"",
+              "\"HOLD\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>The current status of the task.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.totalHours",
+            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "supplies",
+            "description": "<p>An array which contains the list of supply items and its current status</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "supplies.name",
+            "description": "<p>The name of the supply item</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"ONHAND\"",
+              "\"ORDERED\""
+            ],
+            "optional": false,
+            "field": "supplies.status",
+            "description": "<p>The current status of the supply item</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "supplies.type",
+            "description": "<p>The type of the supply item</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     id: 58,\n     name: \"Fix internet connection\",\n     description: \"\",\n     eta: \"Oct 2 2022 12:00:00:AM\",\n     status: \"Inactive\",\n     totalHours: \"03:00 Hrs\"\n     status: \"Start\",\n     supplies: [\n         {\n             name: \"Hammer & Screw driver\",\n             status: \"ONHAND\",\n             type: \"Tools\"\n         }\n     ]\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/maintenance.js",
+    "groupTitle": "Maintenance",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "GET",
+    "url": "/maintenance/{activityId}/get-tasks",
+    "title": "Get Tasks",
+    "version": "2.0.0",
+    "description": "<p>Returns the list of tasks comes under the maintenance activity</p>",
+    "name": "get-tasks",
+    "group": "Maintenance",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "activityId",
+            "description": "<p>The unique ID of the activity</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n    activityId: 25\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "tasks",
+            "description": "<p>An array which contains the list of tasks</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "tasks.id",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.name",
+            "description": "<p>The name of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.description",
+            "description": "<p>The description of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.eta",
+            "description": "<p>The ETA of the task <code>format: YYYY-MM-DD.</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"NOTSTARTED\"",
+              "\"INPROGRESS\"",
+              "\"PAUSED\"",
+              "\"COMPLETED\"",
+              "\"HOLD\""
+            ],
+            "optional": false,
+            "field": "tasks.status",
+            "description": "<p>The current status of the task.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.totalHours",
+            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n        tasks: \n        [\n            {\n                id: 58,\n                name: \"test task 1\",\n                description: \"test task 1\",\n                eta: \"Sep 29 2022, 12:00AM\",\n                status: \"INPROGRESS\",\n                totalHours: \"00:30 Hrs\"\n            },\n            {\n                id: 59,\n                taskName: \"test task 2\",\n                taskDesc: \"test task 2\",\n                eta: \"Sep 27 2022, 12:00 AM\",\n                status: \"PAUSED\",\n                totalHours: \"03:00 Hrs\"\n            }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/maintenance.js",
+    "groupTitle": "Maintenance",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "POST",
+    "url": "/maintenance/update-task-status",
+    "title": "Update Task Status",
+    "version": "2.0.0",
+    "description": "<p>To update the status of the task</p>",
+    "name": "update-task-status",
+    "group": "Maintenance",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "activityId",
+            "description": "<p>The unique ID of the activity</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "taskId",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"STARTED\"",
+              "\"PAUSED\"",
+              "\"RESUMED\"",
+              "\"COMPLETED\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>The status to be updated.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n    activityId: 25,\n    taskId: 58,\n    status: \"COMPLETED\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Success message from the server</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    message: \"Task status updated successfully\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/maintenance.js",
+    "groupTitle": "Maintenance",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "GET",
+    "url": "/receiving/{activityId}/get-tasks",
+    "title": "Get Tasks",
+    "version": "2.0.0",
+    "description": "<p>Returns the list of tasks comes under the maintenance activity</p>",
+    "name": "get-tasks",
+    "group": "Receiving",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "activityId",
+            "description": "<p>The unique ID of the activity</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n    activityId: 25\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "tasks",
+            "description": "<p>An array which contains the list of tasks</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "tasks.id",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tasks.name",
+            "description": "<p>The name of the task</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"NOTSTARTED\"",
+              "\"INPROGRESS\"",
+              "\"PAUSED\"",
+              "\"COMPLETED\"",
+              "\"HOLD\""
+            ],
+            "optional": false,
+            "field": "tasks.status",
+            "description": "<p>The current status of the task.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n        tasks: \n        [\n            {\n                id: 58,\n                name: \"test task 1\",\n                status: \"INPROGRESS\",\n            },\n            {\n                id: 59,\n                name: \"test task 1\",\n                status: \"INPROGRESS\",\n            }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/receiving.js",
+    "groupTitle": "Receiving",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "POST",
+    "url": "/receiving/update-task-status",
+    "title": "Update Task Status",
+    "version": "2.0.0",
+    "description": "<p>To update the status of the task</p>",
+    "name": "update-task-status",
+    "group": "Receiving",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "activityId",
+            "description": "<p>The unique ID of the activity</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "taskId",
+            "description": "<p>The unique ID of the task</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"STARTED\"",
+              "\"PAUSED\"",
+              "\"RESUMED\"",
+              "\"COMPLETED\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>The status to be updated.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Params:",
+          "content": "{\n    activityId: 25,\n    taskId: 58,\n    status: \"COMPLETED\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Success message from the server</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    message: \"Task status updated successfully\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apis/receiving.js",
+    "groupTitle": "Receiving",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "App-Version",
+            "description": "<p>Version of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Build-Number",
+            "description": "<p>The Build number of the application.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Type",
+            "description": "<p>Type of the device. iOS/Android.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-OS-Version",
+            "description": "<p>Device OS version. Used during the time of removing app support for an OS Version.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Device-Identifier",
+            "description": "<p>Device token to send push notifictions.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Api-Key",
+            "description": "<p>The API key to identify the  client.</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>AuthToken received during login.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CommonHeader",
+          "content": "{\n    \"App-Version\": \"0.0.1\",\n    \"Build-Number\": \"0.0.1\",\n    \"Device-Type\": \"Android\",\n    \"Device-OS-Version\": \"10.0.3\",\n    \"Device-Identifier\": \"34889-3248687-324876-324987-324876\",\n    \"Api-Key\": \"AHuy1od49clkvj8ruv3pvp4m1lcg7lq6cmht\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "AuthHeader",
+          "content": "{\n    \"Authorization\": \"Bearer YWxhZGRpbjpvcGVuc2VzYW1l\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "4xx": [
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "InactiveAccount",
+            "description": "<p>The account is inactive. Please contact admin.</p>"
+          },
+          {
+            "group": "4xx",
+            "type": "String",
+            "optional": false,
+            "field": "SessionExpired",
+            "description": "<p>User session has expired.</p>"
+          }
+        ],
+        "6xx": [
+          {
+            "group": "6xx",
+            "type": "String",
+            "optional": false,
+            "field": "GeneralError",
+            "description": "<p>Any general / undefined error types will come under this category.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InactiveAccount",
+          "content": "HTTP/1.1 403 InactiveAccount\n{\n   \"error\": \"The account is inactive. Please contact admin.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "GeneralError",
+          "content": "HTTP/1.1 600 GeneralError\n{\n    error: \"An error occured. Please try again.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "SessionExpired",
+          "content": "HTTP/1.1 401 SessionExpired\n{\n    error: \"Your session has expired.\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "GET",
     "url": "/user/",
     "title": "Get User",
     "version": "2.0.0",
@@ -2721,14 +3097,14 @@
             "type": "String",
             "optional": false,
             "field": "task.description",
-            "description": "<p>The description of the task</p>"
+            "description": "<p>The description of the task. <code>For receiving tasks, this node will be null</code></p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "task.eta",
-            "description": "<p>The ETA of the task <code>Format: MM dd YYYY, hh:mm a. Eg: Sept 29 2022, 12:00 PM</code></p>"
+            "description": "<p>The ETA of the task <code>format: YYYY-MM-DD. For receiving tasks, this node will be null</code></p>"
           },
           {
             "group": "Success 200",
@@ -2749,14 +3125,28 @@
             "type": "String",
             "optional": false,
             "field": "task.totalHours",
-            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs</code></p>"
+            "description": "<p>The expected hours to complete the task.  <code>Format: hh:mm Hrs. For receiving tasks, this node will be null</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.identifier",
+            "description": "<p>The identifier of the activity on with the task belongs.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "task.activityId",
+            "description": "<p>The unique if of the activity on which the task belongs.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n   id: \"1998\",\n   name: \"Robert William\"\n   roleId: 10,\n   role: \"Store Keeper\",\n   attendencStatus: \"PUNCHEDIN\",\n   workingTime: 564646,\n   punchIn: \"7:03 AM\",\n   punchOut: \"10:03 AM\",\n   workStatus: \"work\",\n   task: {\n      id: 58,\n      name: \"test task 1\",\n      description: \"test task 1\",\n      eta: \"Sep 29 2022, 12:00AM\",\n      status: \"INPROGRESS\",\n      totalHours: \"00:30 Hrs\"\n   }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n   id: \"1998\",\n   name: \"Robert William\"\n   roleId: 10,\n   role: \"Store Keeper\",\n   attendencStatus: \"PUNCHEDIN\",\n   workingTime: 564646,\n   punchIn: \"7:03 AM\",\n   punchOut: \"10:03 AM\",\n   workStatus: \"work\",\n   task: {\n      id: 58,\n      name: \"test task 1\",\n      description: \"test task 1\",\n      eta: \"Sep 29 2022, 12:00AM\",\n      status: \"INPROGRESS\",\n      totalHours: \"00:30 Hrs\",\n      identifier: \"maintenance\",\n      activityId: \"237\"\n   }\n}",
           "type": "json"
         }
       ]

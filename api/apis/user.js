@@ -28,11 +28,12 @@
    @apiSuccess {Object} task  Contains the details of the active task of the user.
    @apiSuccess {Integer} task.id The unique ID of the task
    @apiSuccess {String} task.name  The name of the task
-   @apiSuccess {String} task.description  The description of the task
-   @apiSuccess {String} task.eta  The ETA of the task <code>Format: MM dd YYYY, hh:mm a. Eg: Sept 29 2022, 12:00 PM</code>
+   @apiSuccess {String} task.description  The description of the task. <code>For receiving tasks, this node will be null</code>
+   @apiSuccess {String} task.eta  The ETA of the task <code>format: YYYY-MM-DD. For receiving tasks, this node will be null</code>
    @apiSuccess {String="NOTSTARTED", "INPROGRESS", "PAUSED", "COMPLETED", "HOLD"} task.status  The current status of the task. 
-   @apiSuccess {String} task.totalHours  The expected hours to complete the task.  <code>Format: hh:mm Hrs</code>
-    
+   @apiSuccess {String} task.totalHours  The expected hours to complete the task.  <code>Format: hh:mm Hrs. For receiving tasks, this node will be null</code>
+   @apiSuccess {String} task.identifier  The identifier of the activity on with the task belongs.
+   @apiSuccess {String} task.activityId  The unique if of the activity on which the task belongs.
    
    @apiSuccessExample {json} Success-Response:
    HTTP/1.1 200 OK
@@ -52,7 +53,9 @@
          description: "test task 1",
          eta: "Sep 29 2022, 12:00AM",
          status: "INPROGRESS",
-         totalHours: "00:30 Hrs"
+         totalHours: "00:30 Hrs",
+         identifier: "maintenance",
+         activityId: "237"
       }
    }
 
