@@ -1,9 +1,9 @@
 /**
   @apiDefine GeneralError
-  @apiError (6xx) {String} GeneralError Any general / undefined error types will come under this category.
+  @apiError (5xx) {String} GeneralError Any general / undefined error types will come under this category.
 
   @apiErrorExample  GeneralError
-    HTTP/1.1 600 GeneralError
+    HTTP/1.1 599 GeneralError
     {
         error: "An error occured. Please try again."
     }
@@ -34,6 +34,31 @@
 
 
 /**
+  @apiDefine NotFound
+  @apiError (4xx) {String} NotFound Item not found.
+
+  @apiErrorExample {json} NotFound
+  HTTP/1.1 404 NotFound
+  {
+     "error": "Item not found."
+  }
+*/
+
+
+/**
+  @apiDefine UserNotPunchedIn
+  @apiError (5xx) {String} UserNotPunchedIn The user has not yet logged their start time for the work shift.
+
+  @apiErrorExample {json} UserNotPunchedIn
+  HTTP/1.1 598 UserNotPunchedIn
+  {
+      "error": "The user has not yet logged their start time for the work shift"
+  }
+*/
+
+
+
+/**
  @apiDefine AuthHeader
 
  @apiHeader {String} Authorization AuthToken received during login.
@@ -50,7 +75,7 @@
 
  @apiHeader {String} App-Version Version of the application.
  @apiHeader {String} Build-Number The Build number of the application.
- @apiHeader {String} Device-Type Type of the device. iOS/Android.
+ @apiHeader {String} Device-Type Type of the device. Android/RFScanner.
  @apiHeader {String} Device-OS-Version Device OS version. Used during the time of removing app support for an OS Version.
  @apiHeader {String} Device-Identifier Device token to send push notifictions.
  @apiHeader {String} Api-Key The API key to identify the  client.

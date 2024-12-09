@@ -1,31 +1,63 @@
 
 /**
-    @apiIgnore
-    @api {GET} /app/get-locations Get Locations
-    @apiDescription Returns the locations of office / godown etc
-    @apiName get-locations
+    @api {GET} /app/carriers Get Carriers
+    @apiDescription Return all the carriers based on the shipper.
+    @apiName get-carriers
     @apiGroup App
 
     @apiUse CommonHeader
+    @apiUse AuthHeader
 
-    @apiSuccess {Object[]} locations Array of locations where the office or godown located.
-    @apiSuccess {String} locations.name Name of the location.
-    @apiSuccess {Number} locations.latitude  The latitude of the location.
-    @apiSuccess {Number} locations.longitude The longitude of the location.
-    @apiSuccess {Number} locations.longitude The longitude of the location.
-    @apiSuccess {Number} locations.radius The proximity radius.
+    @apiQuery {Number}  adSource     ID of adsource.
 
-   
+    @apiSuccess {Object[]}      carriers                    List of carriers.
+    @apiSuccess {Number}        carriers.id                 ID of the carrier.
+    @apiSuccess {String}        carriers.name               Name of the carrier.
+    @apiSuccess {Object[]}      carriers.serviceTypes       List of service types available for the carrier.
+    @apiSuccess {Number}        carriers.serviceTypes.id    ID of service type.
+    @apiSuccess {String}        carriers.serviceTypes.name  Name of the service type.
+
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
-        locations: [{
-            name: "Kochi",
-            latitude: 10.4387595797,
-            longitude: 77.4387595797,
-            radius: 25
+        carriers: [{
+            id: 38
+            name: "UPS",
+            serviceTypes: [{
+                id: 388
+                name: "UPS - Service1"
+            }]
         }]
     }
     
     @apiUse GeneralError
+    @apiUse SessionExpired
+    @apiUse InactiveAccount
+*/
+
+/**
+    @api {GET} /app/data Get App Data
+    @apiDescription Return all the master data relevant for the app.
+    @apiName get-app-data
+    @apiGroup App
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiSuccess {Object[]}      issues                    List of issues.
+    @apiSuccess {Number}        issues.id                 ID of the carrier.
+    @apiSuccess {String}        issues.name               Name of the carrier.
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        issues: [{
+            id: 38
+            name: "Item not found on location."
+        }]
+    }
+    
+    @apiUse GeneralError
+    @apiUse SessionExpired
+    @apiUse InactiveAccount
 */

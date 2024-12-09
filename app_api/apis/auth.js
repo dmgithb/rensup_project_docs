@@ -1,40 +1,33 @@
 
 /**
-    @apiIgnore
-    @api {POST} /auth/authenticate Authenticate
+    @api {POST} /auth/sign-in Sign In
     @apiDescription Authenticate the user and return the necessary information about user.
-    @apiName authenticate
+    @apiName sign-in
     @apiGroup Auth
 
     @apiUse CommonHeader
 
-    @apiParam {String} data Data reterived from QR code
+    @apiBody {String} [username]    Username of the employee. The node 'data' is unavailable if this is available.
+    @apiBody {String} [password]    Password of the employee. This information is mandatory if the node 'username' is available. The node 'data' is unavailable if this is available.
+    @apiBody {String} [data]        Data of the QR CODE. This will be available only if the user scan the QR code. username and password will be unavailable on this scenario.
 
-    @apiParamExample {json} Params:
-    {
-        "data": "sah74385wnc3wyr8c7w3r873279",
-    }  
-
-    @apiSuccess {String} token Session token.
-    @apiSuccess {String} id Unique ID of the user.
-    @apiSuccess {String} name The full name of the user, concatinate if user's name stored as different components.
-    @apiSuccess {String} department  The name of the department the employee belongs to. 
-    @apiSuccess {String="PUNCHEDIN", "PUNCHEDOUT"} attendencStatus  Whether the user is punched in or punched out.
-    @apiSuccess {Number} workingTime  Total time the user worked. <code>Note: This should be in seconds.</code>.
-    @apiSuccess {String} punchIn  Punch-in time of the employee.
-    @apiSuccess {String} punchOut  Punch-out time of the employee.
+    @apiSuccess {String} token      Session token.
+    @apiSuccess {String} id         Unique ID of the user.
+    @apiSuccess {String} name       The full name of the user, concatinate if user's name stored as different components.
+    @apiSuccess {Number} role       Role of the user. 
+    @apiSuccess {String} location   Location of the user. 
    
    @apiSuccessExample {json} Success-Response:
    HTTP/1.1 200 OK
    {
-        token:"jasghu643hfksjhkscrh4789873897958-"
-        id: "1998",
-        name: "Robert William"
-        department: "Store Keeper",
-        attendencStatus: "PUNCHEDIN",
-        workingTime: 564646,
+        "token":"jasghu643hfksjhkscrh4789873897958-"
+        "id": "1998",
+        "name": "Robert William"
+        "role": 1,
+        "location": "090"
    }
 
+   @apiUse UserNotPunchedIn
    @apiUse InactiveAccount
    @apiUse GeneralError
 */
@@ -43,38 +36,20 @@
 
 
 /**
-    @apiIgnore
-    @api {POST} /auth/unauthenticate Unauthenticate
+    @api {POST} /auth/sign-out Sign Out
     @apiDescription Unauthenticate the user by clearing the session information.
-    @apiName unauthenticate
+    @apiName Sign Out
     @apiGroup Auth
 
     @apiUse CommonHeader
     @apiUse AuthHeader
 
-    @apiSuccess {String} token Session token.
-    @apiSuccess {String} id Unique ID of the user.
-    @apiSuccess {String} name The full name of the user, concatinate if user's name stored as different components.
-    @apiSuccess {String} department  The name of the department the employee belongs to. 
-    @apiSuccess {String="PUNCHEDIN", "PUNCHEDOUT"} attendencStatus  Whether the user is punched in or punched out.
-    @apiSuccess {Number} workingTime  Total time the user worked. <code>Note: This should be in seconds.</code>.
-    @apiSuccess {String} punchIn  Punch-in time of the employee.
-    @apiSuccess {String} punchOut  Punch-out time of the employee.
-   
-   @apiSuccessExample {json} Success-Response:
-   HTTP/1.1 200 OK
-   {
-        token:"jasghu643hfksjhkscrh4789873897958-"
-        id: "1998",
-        name: "Robert William"
-        department: "Store Keeper",
-        attendencStatus: "PUNCHEDIN",
-        workingTime: 564646,
-        punchIn: "7:03 AM",
-        punchOut: "9:03 PM" 
-   }
-
-    @apiUse InactiveAccount
-    @apiUse GeneralError
-    @apiUse SessionExpired
+    @apiSuccess {String} message Message to user.
+  
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        "message": "success"
+    }
 */
+
