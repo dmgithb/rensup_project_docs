@@ -52,6 +52,7 @@
     @apiSuccess {Number}        batches.orders          Number of orders in the batch.
     @apiSuccess {Number}        batches.pickedOrders    Number of orders picked in the batch.
     @apiSuccess {Number=0,1,2}  batches.status          Status of the batch <code>0 - None, 1 - Processing, 2 - Completed</code>
+    @apiSuccess {Number}        batches.shipments       Number of orders shipped in the batch.
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
@@ -61,7 +62,8 @@
             "date": "2024-03-21",
             "orders": 30,
             "pickedOrders": 10,
-            "status": 1
+            "status": 1,
+            "shipments":"8"
         }]
     }
     

@@ -61,3 +61,36 @@
     @apiUse SessionExpired
     @apiUse InactiveAccount
 */
+
+/**
+    @api {GET} /app/printers Get Printers
+    @apiDescription Return thermal printers that are configured to the application to print the shipping label.
+    @apiName get-printers
+    @apiGroup App
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiSuccess {Object[]}      printers                  List of printers.
+    @apiSuccess {Number}        issues.id                 ID of the printer.
+    @apiSuccess {String}        issues.name               Name of the printer.
+    @apiSuccess {String}        issues.ip                 IP Address of the printer.
+    @apiSuccess {String}        issues.port               Port Number of the printer.
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        "printers": [
+            {
+                "id": 1,
+                "name": "Warehouse thermal printer",
+                "ip": "192.168.20.216",
+                "port": "9100"
+            }
+        ]
+    }
+    
+    @apiUse GeneralError
+    @apiUse SessionExpired
+    @apiUse InactiveAccount
+*/

@@ -19,7 +19,8 @@
     @apiSuccess {Number}            orders.orderNumber              Rensup's order number.
     @apiSuccess {Object}            orders.adSource                  Information about the adSource.
     @apiSuccess {Number}            orders.adSource.id               ID of the adSource.
-    @apiSuccess {String}            orders.adSource.name             Name of the adSource.    @apiSuccess {String}            orders.date                     Date of the order. YYYY-MM-DD format.
+    @apiSuccess {String}            orders.adSource.name             Name of the adSource.   
+    @apiSuccess {String}            orders.date                     Date of the order. YYYY-MM-DD format.
     @apiSuccess {Number}            orders.itemCount                Number of items in the order.
     @apiSuccess {Number=0,1,2,3,4,5}  orders.status               Status of the order. <code>0 - Awaiting Picking, 1 - Picked, 2 - Shipment Created, 3 - Label Printed, 4 - On Hold, 5 - Shipped</code>
     @apiSuccess {Number}            orders.batch                    ID of the batch. Have a valid ID if the order is Awaiting Picking, otherwise 0.
@@ -36,11 +37,11 @@
                 "id": 234,
                 "name": "adSource"
             },
-            "shippingType": "2 Day Shipping"
             "date": "2014-11-11",
             "itemCount": 10,
             "status": 0,
-            "batch": 2222
+            "batch": 2222,
+            "shippingType": "2 Day Shipping"
         }]
     }
     
@@ -247,12 +248,16 @@
 
     @apiParam {Number} order        ID of the order.
 
-    @apiSuccess {String}    label   Html content of the shipment label.   
+    @apiSuccess {Array}    shipment_labels            Image url  to preview the shipping label.   
+    @apiSuccess {String}    shipment_labels_raw_file   Shipping label content in ZPL format , to be printed in thermal printer.
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
-        "label": "success"
+        "shipment_labels": [
+            "http://mobileapi24.rensup.com/storage/shipping_labels/16118936_0.jpg?1733894212"
+        ],
+        "shipment_labels_raw_file": "http://mobileapi24.rensup.com/storage/shipping_labels/16118936.ZPL"
     }
     
     @apiUse GeneralError
@@ -438,4 +443,28 @@
     @apiUse GeneralError
     @apiUse SessionExpired
     @apiUse InactiveAccount
+*/
+/**
+    @api {GET} /orders/:order/mark-red-bar-print  Order Print
+    @apiDescription To print the order.
+    @apiGroup Order
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiParam {Number} order        ID of the order.
+
+    @apiBody {Number}   batch       ID of the batch.
+
+    @apiSuccess {String}    message     Message to the user.
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        "message": "success"
+    }
+    @apiUse GeneralError
+    @apiUse InactiveAccount
+    @apiUse NotFound
+    @apiUse SessionExpired
 */

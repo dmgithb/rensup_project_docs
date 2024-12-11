@@ -30,25 +30,3 @@
     @apiUse InactiveAccount
     @apiUse SessionExpired
 */
-
-/**
-    @api {POST} /user/reset-password Reset Password
-    @apiDescription Reset the user's password
-    @apiName reset-password
-    @apiGroup User
-
-    @apiUse CommonHeader
-
-    @apiBody {String}   email   Email of the user.   
-
-    @apiSuccess {String} message    User message
-
-    @apiSuccessExample {json} Success-Response:
-    HTTP/1.1 200 OK
-    {
-        "message": "A mail with instruction has sent to your email."
-    }
-    
-    @apiUse GeneralError
-    @apiUse InactiveAccount
-*/
