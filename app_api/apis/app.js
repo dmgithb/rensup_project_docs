@@ -13,6 +13,7 @@
     @apiSuccess {Object[]}      carriers                    List of carriers.
     @apiSuccess {Number}        carriers.id                 ID of the carrier.
     @apiSuccess {String}        carriers.name               Name of the carrier.
+    @apiSuccess {Number}        carriers.defaultServiceType ID of  default service type of the carrier.
     @apiSuccess {Object[]}      carriers.serviceTypes       List of service types available for the carrier.
     @apiSuccess {Number}        carriers.serviceTypes.id    ID of service type.
     @apiSuccess {String}        carriers.serviceTypes.name  Name of the service type.
@@ -23,6 +24,7 @@
         carriers: [{
             id: 38
             name: "UPS",
+            defaultServiceType:1
             serviceTypes: [{
                 id: 388
                 name: "UPS - Service1"
@@ -47,6 +49,13 @@
     @apiSuccess {Object[]}      issues                    List of issues.
     @apiSuccess {Number}        issues.id                 ID of the carrier.
     @apiSuccess {String}        issues.name               Name of the carrier.
+    @apiSuccess {Object[]}      PackageTypes              List of package types.
+    @apiSuccess {Number}        PackageTypes.id           ID of the package type.
+    @apiSuccess {String}        PackageTypes.name         Name of the package type.
+    @apiSuccess {Number}        PackageTypes.length       Length of the package type.
+    @apiSuccess {Number}        PackageTypes.width        Width of the package type.
+    @apiSuccess {Number}        PackageTypes.height       Height of the package type.
+    @apiSuccess {Number}        PackageTypes.weight       Weight of the package type.
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
@@ -54,7 +63,16 @@
         issues: [{
             id: 38
             name: "Item not found on location."
-        }]
+        }],
+        packageTypes: [
+        {
+            "id": 1,
+            "name": "0.4X0.2X0.3(Envelop)",
+            "length": 0.4,
+            "width": 0.2,
+            "height": 0.3,
+            "weight": 0.05
+        }]  
     }
     
     @apiUse GeneralError

@@ -79,6 +79,7 @@
     @apiSuccess {String}            shippingType            Type of shipping like "2 day shipping"
     @apiSuccess {Object[]}          [packages]               List of packages.
     @apiSuccess {Number}            packages.id              Id of the package.
+    @apiSuccess {Number}            packages.type             Type of the package.
     @apiSuccess {Number}            packages.width             Width of the package.
     @apiSuccess {Number}            packages.length            Length of the package.
     @apiSuccess {Number}            packages.height            Height of the package.
@@ -139,6 +140,7 @@
         },
         "packages": [{
             "id": 32424,
+            "type": 4,
             "weight": 324.6
             "height": 333,
             "length": 99,
@@ -337,6 +339,7 @@
     @apiBody {Number}      length            Length of the package.
     @apiBody {Number}      height            Height of the package.
     @apiBody {Number}      weight            Weight of the package.
+    @apiBody {Number}      type              Type of the package.
 
     @apiSuccess {String}    message     Message to the user.
     @apiSuccess {String}    id          Id to the package.
@@ -394,6 +397,7 @@
     @apiBody {Number}      length            Length of the package.
     @apiBody {Number}      height            Height of the package.
     @apiBody {Number}      weight            Weight of the package.
+    @apiBody {Number}      type              Type of the package.
 
     @apiSuccess {String}    message     Message to the user.
 
