@@ -1,4 +1,3 @@
-
 /**
     @api {GET} /batchtypes Get Batch Types in Activity
     @apiDescription Returns the batch types in the activity

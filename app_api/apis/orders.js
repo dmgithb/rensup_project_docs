@@ -1,4 +1,3 @@
-
 /**
     @api {GET} /orders Get Orders
     @apiDescription Returns the orders based on the role of the user using the filters provided.
@@ -17,6 +16,7 @@
     @apiSuccess {Number}            orders.id                       Id of the order.
     @apiSuccess {String}            orders.marketplaceOrderNumber   Marketplace order number.
     @apiSuccess {Number}            orders.orderNumber              Rensup's order number.
+    @apiSuccess {Number}            orders.batch                    ID of the batch.
     @apiSuccess {Object}            orders.adSource                  Information about the adSource.
     @apiSuccess {Number}            orders.adSource.id               ID of the adSource.
     @apiSuccess {String}            orders.adSource.name             Name of the adSource.   
@@ -33,6 +33,7 @@
             "id": "234",
             "marketplaceOrderNumber": "34543534-3453535"
             "orderNumber": 34324242,
+            "batch":124657,
             "adSource": {
                 "id": 234,
                 "name": "adSource"
@@ -50,7 +51,6 @@
     @apiUse SessionExpired
 */
 
-
 /**
     @api {GET} /orders/:order Get Order
     @apiDescription Returns the order based on the id given.
@@ -62,12 +62,13 @@
 
     @apiParam {Number} order           ID of the order.
 
-    @apiParam {Number} batch           ID of the batch. batch 0 means no product filtering required.
+    @apiQuery {Number} batch           ID of the batch. batch 0 means no product filtering required.
 
     @apiSuccess {Number}            id                       Id of the order.
     @apiSuccess {String}            date                     Date of the order, YYYY-MM-DD format
     @apiSuccess {String}            marketplaceOrderNumber   Marketplace order number.
     @apiSuccess {Number}            orderNumber              Rensup's order number.
+    @apiSuccess {Number}            batch                    ID of the batch.
     @apiSuccess {String}            shipmentLocation         Shipment location, where the shipment creating.
     @apiSuccess {String}            shipmentInstruction      Instruction to be followed for the order.
     @apiSuccess {String}            shipper                  Name of shipper.
@@ -80,18 +81,22 @@
     @apiSuccess {Object[]}          [packages]               List of packages.
     @apiSuccess {Number}            packages.id              Id of the package.
     @apiSuccess {Number}            packages.type             Type of the package.
+    @apiSuccess {Object[]}          [packages.items]           List of  items in the packages.
+    @apiSuccess {Number}            packages.items.id          Item in the package.
+    @apiSuccess {Number}            packages.items.part        Part Of the Item in the package.
     @apiSuccess {Number}            packages.width             Width of the package.
     @apiSuccess {Number}            packages.length            Length of the package.
     @apiSuccess {Number}            packages.height            Height of the package.
     @apiSuccess {Number}            packages.weight            Weight of the package.
     @apiSuccess {String}            packages.price             Price quoted by the carrier for the package.
     @apiSuccess {String}            packages.trackingNumber    Tracking number by the carrier for the package.
-    @apiSuccess {Object}            [carrier]                  Deatils of carrier.
-    @apiSuccess {Number}            carrier.id               ID of the carrier.
-    @apiSuccess {Number}            carrier.name             Name of the carrier.
-    @apiSuccess {Object}            carrier.serviceType      Service type selected.
-    @apiSuccess {Number}            carrier.serviceType.id   ID of the Service type selected
-    @apiSuccess {String}            carrier.serviceType.name Name of the Service type selected.
+    @apiSuccess {Boolean}           packages.isEODGenerated    End Of The Day report generated or Not
+    @apiSuccess {Object}            [packages.carrier]                Details of carrier.
+    @apiSuccess {Number}            packages.carrier.id               ID of the carrier.
+    @apiSuccess {Number}            packages.carrier.name             Name of the carrier.
+    @apiSuccess {Object}            packages.carrier.serviceType      Service type selected.
+    @apiSuccess {Number}            packages.carrier.serviceType.id   ID of the Service type selected
+    @apiSuccess {String}            packages.carrier.serviceType.name Name of the Service type selected.
     @apiSuccess {Object}            [issue]                  Details of the issue reported for the order, if any.         
     @apiSuccess {Number}            issue.id                Id of the predefined reason.       
     @apiSuccess {String}            issue.name               Textual representation of the predefined reason.        
@@ -123,6 +128,7 @@
         "date": "2014-10-02",
         "marketplaceOrderNumber": "34543534-3453535"
         "orderNumber": 34324242,
+        "batch": 137739,
         "shipmentLocation": "090",
         "shippingType": "2 day shipping",
         "shippingAddress": "",
@@ -138,24 +144,58 @@
             "id": 34355,
             "name": "Rensup"
         },
-        "packages": [{
-            "id": 32424,
-            "type": 4,
-            "weight": 324.6
-            "height": 333,
-            "length": 99,
-            "width": 33,
-            "price": 23432.4,
-            "trackingNumber": "234234f4444"
-        }],
-        "carrier": {
-            "id": 324332,
-            "name": "UPS",
-            "serviceType": {
-                "id": 3333,
-                "name": "UPS - Service 1",
+         "packages": [
+            {
+                "id": 20,
+                "type": 4,
+                "items": [
+                    {
+                        "id": "10413",
+                        "part": "-1"
+                    }
+                ],
+                "weight": 2,
+                "height": 3,
+                "length": 1,
+                "width": 2,
+                "price": 0,
+                "trackingNumber": "",
+                "isEODGenerated": false,
+                "carrier": {
+                    "id": 2,
+                    "name": "USPS",
+                    "serviceType": {
+                        "id": 9,
+                        "name": "Priority Mail Express"
+                    }
+                }
+            },
+            {
+                "id": 21,
+                "type": 5,
+                "items": [
+                    {
+                        "id": "40413",
+                        "part": "10413"
+                    }
+                ],
+                "weight": 2,
+                "height": 4,
+                "length": 2,
+                "width": 3,
+                "price": 0,
+                "trackingNumber": "",
+                "isEODGenerated": false,
+                "carrier": {
+                    "id": 2,
+                    "name": "USPS",
+                    "serviceType": {
+                        "id": 9,
+                        "name": "Priority Mail Express"
+                    }
+                }
             }
-        },
+        ],
         "items": [{
             "id": 10,
             "name": "Item One",
@@ -181,7 +221,6 @@
     @apiUse NotFound
     @apiUse SessionExpired
 */
-
 
 /**
     @api {POST} /orders/:order/report-issue Report an Issue
@@ -210,7 +249,6 @@
     @apiUse SessionExpired
 */
 
-
 /**
     @api {POST} /orders/:order/add-carrier Add Order Carrier
     @apiDescription Add a carrier infomration to the order.
@@ -223,6 +261,7 @@
 
     @apiBody {Number}      carrier           ID of the carrier.
     @apiBody {Number}      serviceType       Type of service.
+    @apiBody {Number}      batch             ID of the batch.
 
     @apiSuccess {String}    message     Message to the user.
 
@@ -238,8 +277,6 @@
     @apiUse SessionExpired
 */
 
-
-
 /**
     @api {GET} /orders/:order/shipment-label Get Shipment Label
     @apiDescription Return the shipment label for print.
@@ -249,6 +286,8 @@
     @apiUse AuthHeader
 
     @apiParam {Number} order        ID of the order.
+
+    @apiQuery {Number} batch        ID of the batch.
 
     @apiSuccess {Array}    shipment_labels            Image url  to preview the shipping label.   
     @apiSuccess {String}    shipment_labels_raw_file   Shipping label content in ZPL format , to be printed in thermal printer.
@@ -267,8 +306,6 @@
     @apiUse NotFound
     @apiUse SessionExpired
 */
-
-
 
 /**
     @api {POST} /orders/:order/update-status Update Order Status
@@ -297,7 +334,6 @@
     @apiUse SessionExpired
 */
 
-
 /**
     @api {POST} /orders/:order/item-status Update Item Status
     @apiDescription Update the status of an item in the order
@@ -325,7 +361,6 @@
     @apiUse SessionExpired
 */
 
-
 /**
     @api {POST} /packages/add Add Package
     @apiDescription Add a package for shipment
@@ -335,20 +370,45 @@
     @apiUse AuthHeader
 
     @apiBody {Number}      order             ID of the order.
+    @apiBody {Number}      batch             ID of the batch.
     @apiBody {Number}      width             Width of the package.
     @apiBody {Number}      length            Length of the package.
     @apiBody {Number}      height            Height of the package.
     @apiBody {Number}      weight            Weight of the package.
     @apiBody {Number}      type              Type of the package.
+    @apiBody {Object[]}    [items]           List of  items in the packages.
+    @apiBody {Number}      items.id          Item in the package.
+    @apiBody {Number}      items.part        Part of the Item in the package.
 
-    @apiSuccess {String}    message     Message to the user.
-    @apiSuccess {String}    id          Id to the package.
+    @apiSuccess {Number}            id                Id of the package.
+    @apiSuccess {Number}            type              Type of the package.
+    @apiSuccess {Object[]}          [items]           List of  items in the packages.
+    @apiSuccess {Number}            items.id          Item in the package.
+    @apiSuccess {Number}            items.part        Part Of the Item in the package.
+    @apiSuccess {Number}            width             Width of the package.
+    @apiSuccess {Number}            length            Length of the package.
+    @apiSuccess {Number}            height            Height of the package.
+    @apiSuccess {Number}            weight            Weight of the package.
+    @apiSuccess {String}            price             Price quoted by the carrier for the package.
+    @apiSuccess {String}            trackingNumber    Tracking number by the carrier for the package.
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
-        "id": 3453453,
-        "message": "success"
+        "id": 22,
+        "type": 2,
+        "items": [
+            {
+                "id": "10206",
+                "part": "-1"
+            }
+        ],
+        "weight": 11,
+        "height": 6,
+        "length": 25,
+        "width": 19,
+        "price": 0,
+        "trackingNumber": ""
     }
     
     @apiUse GeneralError
@@ -356,7 +416,6 @@
     @apiUse NotFound
     @apiUse SessionExpired
 */
-
 
 /**
     @api {DELETE} /packages/:package/remove Remove Package
@@ -382,7 +441,6 @@
     @apiUse SessionExpired
 */
 
-
 /**
     @api {POST} /packages/:package/edit Edit Package
     @apiDescription Edit a package for shipment
@@ -391,20 +449,50 @@
     @apiUse CommonHeader
     @apiUse AuthHeader
 
-    @apiParam {Number} package        ID of the package.
+    @apiParam {Number} package          ID of the package.
 
+    @apiBody {Number}      order             ID of the order.
+    @apiBody {Number}      batch             ID of the batch.
     @apiBody {Number}      width             Width of the package.
     @apiBody {Number}      length            Length of the package.
     @apiBody {Number}      height            Height of the package.
     @apiBody {Number}      weight            Weight of the package.
     @apiBody {Number}      type              Type of the package.
+    @apiBody {Object[]}    [items]           List of  items in the packages.
+    @apiBody {Number}      items.id          Item in the package.
+    @apiBody {Number}      items.part        Part of the Item in the package.
 
-    @apiSuccess {String}    message     Message to the user.
+
+    @apiSuccess {Number}            id                Id of the package.
+    @apiSuccess {Number}            type              Type of the package.
+    @apiSuccess {Object[]}          [items]           List of  items in the packages.
+    @apiSuccess {Number}            items.id          Item in the package.
+    @apiSuccess {Number}            items.part        Part Of the Item in the package.
+    @apiSuccess {Number}            width             Width of the package.
+    @apiSuccess {Number}            length            Length of the package.
+    @apiSuccess {Number}            height            Height of the package.
+    @apiSuccess {Number}            weight            Weight of the package.
+    @apiSuccess {String}            price             Price quoted by the carrier for the package.
+    @apiSuccess {String}            trackingNumber    Tracking number by the carrier for the package.
+
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
-        "message": "success"
+        "id": 22,
+        "type": 2,
+        "items": [
+            {
+                "id": "10206",
+                "part": "-1"
+            }
+        ],
+        "weight": 11,
+        "height": 6,
+        "length": 25,
+        "width": 19,
+        "price": 0,
+        "trackingNumber": ""
     }
     
     @apiUse GeneralError
@@ -412,7 +500,6 @@
     @apiUse NotFound
     @apiUse SessionExpired
 */
-
 
 /**
     @api {POST} /orders/:order/carrier-charge Get Carrier charge
@@ -424,6 +511,8 @@
     @apiUse AuthHeader
 
     @apiParam {Number} order   ID of the order.
+
+    @apiQuery {Number} batch   ID of the batch.
 
     @apiBody {Object}      carrier                  List of carriers.
     @apiBody {Number}      carrier.id                ID of the carrier.
@@ -467,6 +556,32 @@
     {
         "message": "success"
     }
+    @apiUse GeneralError
+    @apiUse InactiveAccount
+    @apiUse NotFound
+    @apiUse SessionExpired
+*/
+
+/**
+    @api {POST} /orders/:order/cancel-shipment Cancel Shipment
+    @apiDescription Cancel the order tracking 
+    @apiGroup Order
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    @apiParam {Number} order        ID of the order.
+
+    @apiBody {Number}   trackingNumber  TrackingNumber of the order.
+
+    @apiSuccess {String}    message   Message to user.   
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        "message": "success"
+    }
+    
     @apiUse GeneralError
     @apiUse InactiveAccount
     @apiUse NotFound

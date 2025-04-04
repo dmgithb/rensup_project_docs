@@ -1,4 +1,3 @@
-
 /**
     @api {GET} /app/carriers Get Carriers
     @apiDescription Return all the carriers based on the shipper.
@@ -48,31 +47,14 @@
 
     @apiSuccess {Object[]}      issues                    List of issues.
     @apiSuccess {Number}        issues.id                 ID of the carrier.
-    @apiSuccess {String}        issues.name               Name of the carrier.
-    @apiSuccess {Object[]}      PackageTypes              List of package types.
-    @apiSuccess {Number}        PackageTypes.id           ID of the package type.
-    @apiSuccess {String}        PackageTypes.name         Name of the package type.
-    @apiSuccess {Number}        PackageTypes.length       Length of the package type.
-    @apiSuccess {Number}        PackageTypes.width        Width of the package type.
-    @apiSuccess {Number}        PackageTypes.height       Height of the package type.
-    @apiSuccess {Number}        PackageTypes.weight       Weight of the package type.
-
+    @apiSuccess {String}        issues.name               Name of the carrier
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
     {
         issues: [{
             id: 38
             name: "Item not found on location."
-        }],
-        packageTypes: [
-        {
-            "id": 1,
-            "name": "0.4X0.2X0.3(Envelop)",
-            "length": 0.4,
-            "width": 0.2,
-            "height": 0.3,
-            "weight": 0.05
-        }]  
+        }] 
     }
     
     @apiUse GeneralError
@@ -90,10 +72,10 @@
     @apiUse AuthHeader
 
     @apiSuccess {Object[]}      printers                  List of printers.
-    @apiSuccess {Number}        issues.id                 ID of the printer.
-    @apiSuccess {String}        issues.name               Name of the printer.
-    @apiSuccess {String}        issues.ip                 IP Address of the printer.
-    @apiSuccess {String}        issues.port               Port Number of the printer.
+    @apiSuccess {Number}        printers.id                 ID of the printer.
+    @apiSuccess {String}        printers.name               Name of the printer.
+    @apiSuccess {String}        printers.ip                 IP Address of the printer.
+    @apiSuccess {String}        printers.port               Port Number of the printer.
 
     @apiSuccessExample {json} Success-Response:
     HTTP/1.1 200 OK
@@ -104,6 +86,52 @@
                 "name": "Warehouse thermal printer",
                 "ip": "192.168.20.216",
                 "port": "9100"
+            }
+        ]
+    }
+    
+    @apiUse GeneralError
+    @apiUse SessionExpired
+    @apiUse InactiveAccount
+*/
+
+/**
+    @api {GET} /app/boxes Get Boxes
+    @apiDescription Return the box dimensions available.
+    @apiName get-boxes
+    @apiGroup App
+
+    @apiUse CommonHeader
+    @apiUse AuthHeader
+
+    
+    @apiSuccess {Object[]}      PackageTypes              List of package types.
+    @apiSuccess {Number}        PackageTypes.id           ID of the package type.
+    @apiSuccess {String}        PackageTypes.name         Name of the package type.
+    @apiSuccess {Number}        PackageTypes.length       Length of the package type.
+    @apiSuccess {Number}        PackageTypes.width        Width of the package type.
+    @apiSuccess {Number}        PackageTypes.height       Height of the package type.
+    @apiSuccess {Number}        PackageTypes.weight       Weight of the package type.
+
+    @apiSuccessExample {json} Success-Response:
+    HTTP/1.1 200 OK
+    {
+        "packageTypes": [
+            {
+            "id": 1,
+            "name": "Envelop - 0.4x0.2x0.3",
+            "length": 0.4,
+            "width": 0.2,
+            "height": 0.3,
+            "weight": 0.05
+            },
+            {
+                "id": 2,
+                "name": "Box - 25x19x6",
+                "length": 25,
+                "width": 19,
+                "height": 6,
+                "weight": 0
             }
         ]
     }
